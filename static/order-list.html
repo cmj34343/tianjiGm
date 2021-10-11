@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <!-- <link rel="stylesheet" href="//res.layui.com/layui/dist/css/layui.css?t=1615206508214" media="all"> -->
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/fly.min.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	  
+  </head>
+	
+	
+  
+  <body>
+  <div class="x-nav">
+  <span class="layui-breadcrumb">
+	<a href="">首页</a>
+	<a href="">自建房屋登记</a>
+	<a>
+	  <cite>登记管理</cite></a>
+  </span>
+  <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+	<i class="layui-icon" style="line-height:30px">&#xe669</i></a>
+</div>
+  
+  <div class="layui-row" style="padding-top:30px;">
+	  
+	<div class="layui-col-md12 x-so">
+	  <input type="text" name="sreachText" id="sreachText" placeholder="请输入房屋编号或户主名" autocomplete="off" class="layui-input" style="width: 300px">
+	  <button class="layui-btn"  id="sreachbtn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+	</div>
+  </div>
+<table class="layui-hide" id="demo" lay-filter="test"></table>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</button>
+    <button class="layui-btn layui-btn-sm" lay-event="importExcel" id="importExcel">导入excel</button>
+  </div>
+</script>
+ 
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+ 
+layui.use(  ['table' ,"upload"], function(){
+  var table = layui.table //表格
+  var upload = layui.upload //upload
+  var $ = layui.jquery;
+
+  var tableIns = null;
+
+  function bindTableToolbarFunction() {
+        // 导入Excel
+      upload.render({
+        elem: '#importExcel' //绑定元素
+        ,url: '/api/acl_role/upload_excel' //上传接口
+        ,accept:"file"
+        ,acceptMime: 'excel/*'
+        ,exts:"xlsx|xls|csv"
+        // ,accept: 'file'
+        ,number:1
+        ,size:"2048"
+        // ,data: {
+        //     id: index+1
+        // }
+        , multiple: true
+        ,done: function(res){
+            // console.log("res:",res);
+            if (res.code != "0") {
+              layer.msg("导入失败,请检查表格!");
+            } else {
+              // location.reload();
+              tableIns.reload();
+              bindTableToolbarFunction();
+              layer.msg("导入成功!!");
+              // parent.layer.msg("导入成功!!");
+            }
+            
+
+
+        }
+        ,error: function(){
+          layer.msg("导入失败!!");
+            //请求异常回调
+        }
+      });
+  }
+
+  
+  //执行一个 table 实例
+  tableIns = table.render({
+    elem: '#demo'
+    ,height: 700
+    ,url: '/api/acl_role/getList' //数据接口
+//    ,title: '用户表'
+    ,page: true //开启分页
+    ,limit: 20
+    , even: 'true'//隔行背景
+    // ,toolbar: 'default'
+    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+    ,totalRow: false//开启合计行
+    ,height: 'full-140'  
+    ,cols: [[ //表头
+      {type: 'checkbox', fixed: 'left'}
+      ,{field: 'idx', title: '序号', width:70, fixed: 'left'}//,hide:true sort: true, 
+      ,{field: 'orderId', title: '编号（年月村序次）', width:150,sort: true}
+      ,{field: 'huzhuName', title: '房屋户主姓名', width:120, align:'center'} 
+      // ,{field: 'state', title: '当前状态', width:100, align:'center', sort: true}
+      ,{field: 'jiedao', title: '所在区域（镇、街道）', width: 150, align:'center'}
+      ,{field: 'shequ', title: '所在区域（村）', width:150, align:'center'}
+      ,{field: 'xiangxidizhi', title: '详细地址', width: 250, align:'center'}
+      ,{field: 'jianced', title: '检测日期', width: 150, align:'center'}
+      ,{field: 'shenhed', title: '审核时间', width: 100, align:'center'}
+      
+      ,{field: 'longitude', title: '坐标X（经度）', width: 120, align:'center'}
+      ,{field: 'latitude', title: '坐标Y（纬度）', width: 120, align:'center'}
+      // ,{field: 'economic_condition', title: '农户经济条件', width: 150, align:'center'}
+      ,{field: 'buildyear', title: '建成年份', width: 120, align:'center'}
+      ,{field: 'jianzhugn', title: '建筑功能', width: 120, align:'center'}
+      ,{field: 'jiegoulx', title: '结构类型', width: 150, align:'center'}
+      ,{field: 'jianzhumj', title: '建筑面积', width: 120, align:'center'}
+      ,{field: 'cengnum', title: '建筑层数', width: 120, align:'center'}
+      ,{field: 'jianzhugao', title: '建筑高度', width: 120, align:'center'}
+      ,{field: 'qizhufs', title: '砌筑方式', width: 120, align:'center'}
+      ,{field: 'jichuqk', title: '基础情况', width: 150, align:'center'}
+      ,{field: 'wfzhoubian', title: '房屋周边情况', width: 120, align:'center'}
+      ,{field: 'tudixz', title: '土地性质', width: 120, align:'center'}
+      ,{field: 'jiegoucg', title: '结构拆改', width: 120, align:'center'}
+      ,{field: 'xiushanjg', title: '修缮加固', width: 120, align:'center'}
+      ,{field: 'jiacenggz', title: '加层改造', width: 150, align:'center'}
+      ,{field: 'lishizh', title: '历史灾害', width: 150, align:'center'}
+      ,{field: 'jiancep', title: '检测人员', width:120, align:'center', sort: true}
+      ,{field: 'anquznzs', title: '安全隐患综述', width: 150, align:'center'}
+      // ,{field: 'basement', title: '地下室', width: 100, align:'center'}
+      // ,{field: 'three_noes', title: '三无', width: 100, align:'center'}
+      // ,{field: 'material', title: '预制多孔板', width: 100, align:'center'}
+      // ,{field: 'procedures', title: '用地手续', width: 100, align:'center'}
+      // ,{field: 'guihua', title: '建设规划手续', width: 100, align:'center'}
+      // ,{field: 'chanquan', title: '产权证', width: 100, align:'center'}
+      // ,{field: 'buzhu', title: '享受补助', width: 100, align:'center'}
+	    // ,{field: 'from', title: '数据来源', width:120, align:'center', sort: true}
+      ,{field: 'pingjiadj', title: '评价等级', width: 100, align:'center'}
+      ,{field: 'chulijy', title: '处理建议', width: 110, align:'center'}
+      ,{field: 'shenhep', title: '审核人员', width: 100, align:'center'}
+      ,{field: 'phone', title: '房屋户主电话', width:120, align:'center'} 
+      ,{field: 'idCard', title: '身份证号', width:180, align:'center'} 
+      
+      
+      // ,{field: 'change_time', title: '最后修改时间', width: 200, align:'center'}
+      ,{fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
+    ]]
+  });
+  
+  //监听头工具栏事件
+  table.on('toolbar(test)', function(obj){
+    var checkStatus = table.checkStatus(obj.config.id)
+    ,data = checkStatus.data; //获取选中的数据
+    switch(obj.event){
+      case 'add':
+        // layer.msg('添加');
+		    x_admin_show('农村房屋调查登记表','./order-add.html')
+      break;
+      case 'update':
+        if(data.length === 0){
+          layer.msg('请选择一行');
+        } else if(data.length > 1){
+          layer.msg('只能同时编辑一个');
+        } else {
+          layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+        }
+      break;
+      case 'delete':
+        if(data.length === 0){
+          layer.msg('请选择一行');
+        } else {
+          var startidx = data[0]["idx"];
+          var orderId = startidx;
+          if(data.length > 1) {
+            var endidx = data[data.length-1]["idx"];
+            orderId = "{0}-{1}".format(startidx, endidx);
+          }
+          layer.confirm("真的删除[{0}]序号么?".format(orderId), function(index){
+            fly.post('/api/acl_role/delete',data)
+            .then(function (response) {
+                //		response
+                console.log(response.data.code);
+                if (response.data.code == "401") {
+                  // location.href='login.html'
+                }else if (response.data.code == "200") {
+                  layer.msg("删除成功!");
+                  location.reload();
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+          });
+        }
+      break;
+    };
+  });
+// 搜索
+    $('#sreachbtn').on('click', function(){
+      var type = $(this).data('type');//huzhuName
+      var demoReload = $('#sreachText');
+      console.log(demoReload.val());
+      tableIns.reload({
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            param: {
+              orderId: demoReload.val()
+            }
+          },done: function(res, curr, count){
+            bindTableToolbarFunction();
+          }
+        }, 'data');
+
+    });
+  
+    bindTableToolbarFunction();
+  //监听行工具事件
+  table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+    var data = obj.data //获得当前行数据
+    ,layEvent = obj.event; //获得 lay-event 对应的值
+    if(layEvent === 'detail'){
+      // layer.msg('查看操作');
+      sessionStorage.setItem('edit_data',JSON.stringify(data));
+      x_admin_show('农村房屋调查登记表查看','./order-read.html');
+    } else if(layEvent === 'del'){
+      console.log("data",data);
+      var orderId = data["orderId"] || "0";
+      layer.confirm("真的删除[{0}]编号么?".format(orderId), function(index){
+        console.log(JSON.stringify(data));
+        fly.post('/api/acl_role/delete',data)
+        .then(function (response) {
+            //		response
+            console.log(response.data.code);
+            if (response.data.code == "401") {
+              // location.href='login.html'
+            }else if (response.data.code == "200") {
+              layer.msg("删除成功!");
+              location.reload();
+            }
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      });
+    } else if(layEvent === 'edit'){
+      sessionStorage.setItem('edit_data',JSON.stringify(data));
+      x_admin_show('农村房屋调查登记表编辑','./order-edit.html');
+    }
+  });
+  
+
+
+});
+</script>
+  
+    
+  </body>
+
+</html>

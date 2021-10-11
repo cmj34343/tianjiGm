@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"_bucketname":{"$numberInt":"1"},"key":{"$numberInt":"1"}},"name":"_bucketname_1_key_1"}],"uuid":"1c546f4232104f84964f1ef7b6abf72c","collectionName":"acl_resources"}

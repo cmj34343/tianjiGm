@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/fly.min.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-body">
+        <form class="layui-form" lay-filter="example">
+            <!-- 基础信息 -->
+            <div class="layui-inline">
+            <div class="layui-btn-container">
+            <a class="layui-btn layui-btn-sm" style="float:right"  id="outWord">导出word</a>
+            <a class="layui-btn layui-btn-sm" style="float:right"  id="outImgWord">导出图片word</a>
+            <label style="font-size: 15px; font-weight: bold">基础信息</label>
+            </div>
+            <hr class="layui-bg-cyan"style="height: 2px;">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>房屋户主姓名:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="huzhuName" name="huzhuName" disabled required="" lay-verify="required"  placeholder=""
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">    
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>身份证号:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="idCard" name="idCard" disabled required="" lay-verify="required" placeholder="" 
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>房屋户主电话:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="phone" name="phone" disabled required="" lay-verify="required" placeholder="" 
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                
+                
+                <!-- <div class="layui-input-inline">
+                    <select name="province" disabled lay-filter="province">
+                    <option value="浙江省">浙江省</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="city"  disabled lay-filter="city">
+                    <option value="宁波市">宁波市</option>
+                    </select>
+                </div> -->
+                <div class="layui-inline" id="bioarea-wrap">
+                    <label for="area" class="layui-form-label">
+                        <span class="x-red">*</span>所在区域:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select style="width: 100px;" class="level-1-select" lay-filter="#bioarea-wrap1level"
+                            name="province" disabled>
+                            <option value="">余姚市</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select class="level-2-select" lay-filter="#bioarea-wrap2level" id="jiedao" name="jiedao" disabled>
+                            <option value="" >请选择市</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select class="level-3-select" lay-filter="#bioarea-wrap3level" id="shequ" name="shequ" disabled>
+                            <option value="" >请选择市</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>详细地址:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="xiangxidizhi" name="xiangxidizhi" disabled required="" lay-verify="required"
+                        autocomplete="off" class="layui-input" style="width: 500px;">
+                    </div>
+                </div>  
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="phone" class="layui-form-label">
+                        <span class="x-red">*</span> GIS-X(经度):
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="longitude" name="longitude" disabled required="" 
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">    
+                    <label for="phone" class="layui-form-label">
+                        <span class="x-red">*</span>GIS-Y(纬度):
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="latitude" name="latitude" disabled required="" 
+                        autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                        <div id="locationBtn" class="layui-icon layui-icon-location map-location" style="margin-top: 10px;"></div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>建成年份:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="buildyear" disabled>
+                        <option><请选择></option>
+                        <option>1949年及以前</option>
+                        <option>50年代</option>
+                        <option>60年代</option>
+                        <option>70年代</option>
+                        <option>80年代</option>
+                        <option>90年代</option>
+                        <option>2000年</option>
+                        <option>2001年</option>
+                        <option>2002年</option>
+                        <option>2003年</option>
+                        <option>2004年</option>
+                        <option>2005年</option>
+                        <option>2006年</option>
+                        <option>2007年</option>
+                        <option>2008年</option>
+                        <option>2009年</option>
+                        <option>2010年</option>
+                        <option>2011年</option>
+                        <option>2012年</option>
+                        <option>2013年</option>
+                        <option>2014年</option>
+                        <option>2015年</option>
+                        <option>2016年</option>
+                        <option>2017年</option>
+                        <option>2018年</option>
+                        <option>2019年</option>
+                        <option>2020年</option>
+                        <option>2021年</option>                    
+                        <option>2022年</option>                    
+                        <option>2023年</option>                    
+                        <option>2024年</option>                    
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="phone" class="layui-form-label">
+                        <span class="x-red">*</span>建筑功能:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="jianzhugn" disabled>
+                        <option><请选择></option>
+                        <option>住宅公寓</option>
+                        <option>办公用房</option>
+                        <option>商业用房</option>
+                        <option>工业用房</option>
+                        <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>结构类型:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="jiegoulx" disabled>
+                        <option><请选择></option>
+                        <option>砖石结构</option>
+                        <option>土木结构</option>
+                        <option>混凝土结构</option>
+                        <option>木结构</option>
+                        <option>钢结构</option>
+                        <option>混杂结构</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="phone" class="layui-form-label">
+                        <span class="x-red">*</span>建筑面积（㎡）:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="jianzhumj" name="jianzhumj" disabled required="" 
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="phone" class="layui-form-label">
+                        <span class="x-red">*</span>建筑层数:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="cengnum" disabled>
+                        <option><请选择></option>
+                        <option>一层</option>
+                        <option>二层</option>
+                        <option>三层</option>
+                        <option>四层</option>
+                        <option>五层及以上</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="phone" class="layui-form-label">
+                        <span class="x-red">*</span>建筑高度（m）:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="jianzhugao" name="jianzhugao" disabled required="" 
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>砌筑方式:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="qizhufs" disabled>
+                        <option><请选择></option>
+                        <option>空斗</option>
+                        <option>实砌</option>
+                        <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>基础情况:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="jichuqk" disabled>
+                        <option><请选择></option>
+                        <option>天然基础</option>
+                        <option>桩基础</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>房屋周边情况:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="wfzhoubian" disabled>
+                        <option><请选择></option>
+                        <option>平地</option>
+                        <option>低洼地</option>
+                        <option>山边</option>
+                        <option>水边</option>
+                        <option>海边</option>
+                        <option>地质灾害易发区</option>
+                        <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>土地性质:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="tudixz" disabled>
+                        <option><请选择></option>
+                        <option>国有土地</option>
+                        <option>集体土地</option>
+                        <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- 历史使用 -->
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>结构拆改:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="jiegoucg" disabled>
+                        <option><请选择></option>
+                        <option>无拆改</option>
+                        <option>一般拆改</option>
+                        <option>严重拆改</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>加层改造:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="jiacenggz" disabled>
+                        <option><请选择></option>
+                        <option>无加层</option>
+                        <option>加一层</option>
+                        <option>加二层</option>
+                        <option>加三层及以上</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span> 修缮加固:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="xiushanjg" disabled>
+                        <option><请选择></option>
+                        <option>正常使用</option>
+                        <option>质量原因</option>
+                        <option>灾害原因</option>
+                        <option>使用功能原因</option>
+                        <option>其他原因</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span> 历史灾害:
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="lishizh" disabled>
+                        <option><请选择></option>
+                        <option>正常使用</option>
+                        <option>火灾</option>
+                        <option>风灾</option>
+                        <option>雪灾</option>
+                        <option>水灾</option>
+                        <option>地质</option>
+                        <option>其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- 检测信息 -->
+            <label style="font-size: 15px; font-weight: bold;">检测信息</label> 
+            <hr class="layui-bg-cyan"style="height: 2px;">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="info" class="layui-form-label">
+                        <span class="x-red">*</span>检测日期:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="jianced" disabled id="jianced" lay-verify="date" lay-filter="logindate" placeholder="yyyy-MM-dd" autocomplete="on" class="layui-input">
+                    </div>
+                </div>  
+                <div class="layui-inline">
+                    <label for="info" class="layui-form-label">
+                        <span class="x-red">*</span>检测人员:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="jiancep" disabled id="jiancep" lay-verify="required" lay-reqtext="检测人员是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <div class="layui-inline">
+                    <label for="info" class="layui-form-label">
+                        <span class="x-red">*</span>安全隐患综述:
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea name="anquznzs" disabled placeholder="请输入内容" class="layui-textarea" style="width: 500px;"></textarea>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="layui-form-item" pane="">
+                <div class="layui-inline">
+                    <label for="info" class="layui-form-label">
+                        <span class="x-red">*</span>评价等级:
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="pingjiadj" disabled value="" lay-filter="level" title="未作鉴定" checked="">
+                        <input type="radio" name="pingjiadj" disabled value="A" lay-filter="level" title="A"/>
+                        <input type="radio" name="pingjiadj" disabled value="B" lay-filter="level" title="B"/>
+                        <input type="radio" name="pingjiadj" disabled value="C" lay-filter="level" title="C"/>
+                        <input type="radio" name="pingjiadj" disabled value="D" lay-filter="level" title="D"/>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>处理建议:
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="chulijy" disabled value="可继续使用：定期进行观查，必要时进行修缮。" lay-skin="primary" lay-filter="advice" title="可继续使用：定期进行观查，必要时进行修缮。" checked="">
+                        <input type="radio" name="chulijy" disabled value="观察使用：应采取适当安全技术措施，尚能短期使用，但尚需继续观察。" lay-skin="primary" lay-filter="advice" title="观察使用：应采取适当安全技术措施，尚能短期使用，但尚需继续观察。">
+                        <input type="radio" name="chulijy" disabled value="处理使用：采取适当技术措施后，可解除危险。" lay-skin="primary" lay-filter="advice" title="处理使用：采取适当技术措施后，可解除危险。">
+                        <input type="radio" name="chulijy" disabled value="停止使用：已无修缮价值，暂时不危及相邻建筑和影响他人安全。" lay-skin="primary" lay-filter="advice" title="停止使用：已无修缮价值，暂时不危及相邻建筑和影响他人安全。">
+                        <input type="radio" name="chulijy" disabled value="整体拆除：整幢危险且无修缮价值，需立即拆除。" lay-skin="primary" lay-filter="advice" title="整体拆除：整幢危险且无修缮价值，需立即拆除。">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>审核人员:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="shenhep" disabled lay-verify="required" lay-reqtext="审核人员是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>审核时间:
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="shenhed" disabled id="shenhed" id="verifydate" lay-verify="date" lay-filter="verifydate" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <!-- 房屋照片 (请上传10M以内jpg格式的图片) -->
+            <label style="font-size: 15px; font-weight: bold;">房屋照片 (请上传10M以内jpg格式的图片)</label> 
+            <hr class="layui-bg-cyan"style="height: 2px;">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red">*</span>外立面照片(正、反面):
+                    </label>
+
+                    <div class="layui-inline" id="upImg1">
+                        <img class="" src="images/tianjia.jpg"></img>
+                        
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-inline" id="uploadView1">
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>周边环境图片:
+                </label>
+                <div class="layui-inline" id="upImg2">
+                    <img class="" src="images/tianjia.jpg"></img>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-inline" id="uploadView2">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>结构破坏照片:
+                </label>
+                <div class="layui-inline" id="upImg3">
+                    <img class="" src="images/tianjia.jpg"></img>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-inline" id="uploadView3">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>结构裂缝照片:
+                </label>
+                <div class="layui-inline" id="upImg4">
+                    <img class="" src="images/tianjia.jpg"></img>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-inline" id="uploadView4">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>其他情况照片:
+                </label>
+                <div class="layui-inline" id="upImg5">
+                    <img class="" src="images/tianjia.jpg"></img>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-inline" id="uploadView5">
+                    </div>
+                </div>
+            </div>
+
+          
+          <!-- <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-block">
+              </label>
+              <button type="submit" class="layui-btn" lay-filter="add" lay-submit="" style="margin-top: 50px;">
+                  保存并提交表格
+              </button>
+          </div> -->
+      </form>
+    </div>
+    <script>
+        // layui.config({
+        //     base: './js/'
+        // }).extend({
+        //     bioarea: 'bioarea'
+        // });
+        layui.config({
+            base : './lib/layui_exts/'
+        }).extend({
+            loading: 'loading/loading',
+            locationX: 'location/locationX',
+            location: 'location/location',
+            bioarea: 'bioarea'
+        })
+    </script>
+    <script>
+        for (let index = 0; index < 5; index++) {
+            sessionStorage.removeItem('uploadView'+(index+1));
+        }
+        var imgDict = {};
+        imgDict["list1"] = [];
+        imgDict["list2"] = [];
+        imgDict["list3"] = [];
+        imgDict["list4"] = [];
+        imgDict["list5"] = [];
+
+        function deleteElement(Obj,idx) {
+            // console.log("idx",idx);
+            // for (var key in Obj) {
+            //     console.log("Obj key",key);
+            //     console.log("Obj value",Obj[key]);
+                
+            // }
+            var imgFile = Obj.id;
+            var list = imgDict["list" + idx];
+            var listIdx = list.indexOf(imgFile);
+            list.splice(listIdx,1)
+            fly.post('/api/acl_role/delete_img',{file:Obj.id})
+            .then(function (response) {
+              console.log(response);
+              
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+            Obj.parentNode.parentNode.removeChild(Obj.parentNode);
+            var mNum = Number(sessionStorage.getItem('uploadView'+idx)) - 1;
+            sessionStorage.setItem('uploadView'+idx,String(mNum));
+        }
+
+        
+
+        layui.use(['form','layer','laydate', 'bioarea','location', 'loading'], function(){
+            $ = layui.jquery;
+            var form = layui.form
+            ,layer = layui.layer,
+            laydate = layui.laydate, 
+            bioarea = layui.bioarea,
+            location = layui.location;
+
+            
+
+            var date = sessionStorage.getItem('edit_data');
+            var formDate = JSON.parse(date);
+            form.val('example', formDate);
+            sessionStorage.removeItem('edit_data');
+            
+            var locationData = {lng:121.14981,lat:30.04102};
+
+            location.render("#locationBtn",{
+                type:1,
+                apiType: "gaodeMap",
+                coordinate: "gaodeMap",
+                mapType: 0,
+                zoom: 15,
+                title: '区域定位',
+                init: function(){
+                    return {longitude: $("#longitude").val()?$("#longitude").val():locationData.lng,latitude: $("#latitude").val()?$("#latitude").val():locationData.lat};
+                },
+                success: function (data) {
+                    $("#longitude").val(data.lng);
+                    $("#latitude").val(data.lat);
+                }
+            });
+
+            bioarea.render({
+               elem: '#bioarea-wrap',
+               defaultData: {
+                   provinceCode: '110000',
+                   cityCode: bioarea.getCodeByName(formDate.jiedao),
+                   countyCode: bioarea.getCodeByName(formDate.shequ)
+               },
+               form
+           })
+
+           var imgFiles = formDate["imgFiles"];
+            
+           var imgFiles = formDate["imgFiles"];
+            if (imgFiles) {
+                for (let index = 0; index < 5; index++) {
+                    var linedata = imgFiles["list"+(index+1)];
+                    for (let j = 0; j < 2; j++) {
+                        var filePath = linedata[j];
+                        if (filePath != "") {
+                            layui.$('#uploadView'+(index+1)).removeClass('layui-hide');
+                            var mNum = sessionStorage.getItem('uploadView'+(index+1));
+                            if (mNum == null) {
+                                mNum = 0;
+                            } else{
+                                mNum = Number(mNum);
+                            }
+                            imgDict["list"+(index+1)].push(filePath);
+                            layui.$('#uploadView'+(index+1)).append('<div class="layui-inline"><img id="imgZmList" name="imgZmList" src="' + filePath +
+                                '"width="100" height="100"></img></div>');
+                            form.render();
+                            var numStr = String(mNum++);
+                            sessionStorage.setItem('uploadView'+(index+1),String(mNum));
+
+                        }
+                        
+                    }
+                    
+                }
+            }
+
+            
+            //
+            $('#outWord').on('click', function(){
+                
+                $(element).loading({
+                    "background": "#000000",
+                    "imgSrc": 7
+                });
+                fly.post('/api/acl_role/getWord',{id:formDate.id})
+                .then(function (response) {
+                    console.log(response);
+                    if (response.data.code == "200") {
+                        console.log(response.data.data.file);
+                        window.location='/'+response.data.data.file;
+                    } else{
+                        layer.msg("导出失败!!");
+                    }
+                    $(element).loading('hideAll');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    layer.msg("导出失败!!");
+                    $(element).loading('hideAll');
+                });
+                
+
+            });
+            
+            $('#outImgWord').on('click', function(){
+                
+                $(element).loading({
+                    "background": "#000000",
+                    "imgSrc": 7
+                });
+                fly.post('/api/acl_role/getImgWord',{id:formDate.id})
+                .then(function (response) {
+                    console.log(response);
+                    if (response.data.code == "200") {
+                        console.log(response.data.data.file);
+                        window.location='/'+response.data.data.file;
+                    } else{
+                        layer.msg("导出失败!!");
+                    }
+                    $(element).loading('hideAll');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    layer.msg("导出失败!!");
+                    $(element).loading('hideAll');
+                });
+                
+
+            });
+            
+            
+            
+        
+      
+          
+          
+        });
+    </script>
+    
+  </body>
+
+</html>

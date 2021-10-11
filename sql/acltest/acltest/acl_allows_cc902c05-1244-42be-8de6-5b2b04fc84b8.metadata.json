@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"_bucketname":{"$numberInt":"1"},"key":{"$numberInt":"1"}},"name":"_bucketname_1_key_1"}],"uuid":"ef2c885fc84c44cf99d8eb311afbab73","collectionName":"acl_allows_cc902c05-1244-42be-8de6-5b2b04fc84b8"}

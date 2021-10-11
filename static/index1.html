@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>eCommerce template By Adobe Dreamweaver CC</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+<script type="text/javascript" src="/jquery1.6.1.min.js">
+function changepic() {
+	savePic();
+	return;
+	var reads = new FileReader();
+	f = document.getElementById('file').files[0];
+	//savePic(f);                    
+	reads.readAsDataURL(f);
+	reads.onload = function (e) {
+		var y = document.createElement('img');
+		y.id = "img3";
+		y.src = this.result;
+		$("#imgPreview").append(y);
+		
+	};
+};
+	
+function savePic(file=null) {
+    var formData = new FormData();
+//    formData.append('file', file);
+	formData.append('account', "admin");
+	formData.append('password', "admin");
+    $.ajax({
+			url: "10.246.105.96:3000\login",
+			type: "post",
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function (data) {
+				var picId = JSON.parse(data).atts[0].id;  
+				alert("返回值id为："+picId);
+			},
+			error: function (data) {
+				alert("上传失败");
+			}
+      });
+} 
+</script>
+</head>
+<body>
+<div id="imgPreview">
+<div id="prompt3">
+	<div id="imgSpan">
+		点击上传
+	</div>
+<!--	<input type="file" id="file" class="filepath" onchange="changepic()" accept="image/*">-->
+	<input  type="button" id="file"  onclick="login()" value = "登陆">
+	<script>
+		var fly=require("flyio")
+		function login() {
+			
+			fly.post('/api/acl_user/login',{
+				account: 'admin',
+				password: 'admin'
+				
+			})
+			  .then(function (response) {
+				console.log(response);
+			  })
+			  .catch(function (error) {
+				console.log(error);
+			  });
+
+		}
+		function getUsers() {
+			
+			fly.post('/api/acl_role/getList',{})
+			  .then(function (response) {
+				console.log(response);
+			  })
+			  .catch(function (error) {
+				console.log(error);
+			  });
+
+		}
+		function logout() {
+			
+			fly.post('/api/acl_user/logout',{})
+			  .then(function (response) {
+				console.log(response);
+			  })
+			  .catch(function (error) {
+				console.log(error);
+			  });
+
+		}
+	</script>
+	<button id="imgSpan2" type="button" onclick="getUsers()">获取用户列表</button>
+	<button id="imgSpan3" type="button" onclick="logout()">退出登陆</button>
+</div>
+<!--<img src="11" id="img3" />-->
+</div>
+
+<div id="mainWrapper">
+  <header> 
+    <!-- This is the header content. It contains Logo and links -->
+    <div id="logo"> <!-- <img src="logoImage.png" alt="sample logo"> --> 
+      <!-- Company Logo text --> 
+      LOGO </div>
+    <div id="headerLinks"><a href="#" title="Login/Register">Login/Register</a><a href="#" title="Cart">Cart</a></div>
+  </header>
+  <section id="offer"> 
+    <!-- The offer section displays a banner text for promotions -->
+    <h2>OFFER 50%</h2>
+    <p>REALLY AWESOME DISCOUNTS THIS JULY</p>
+  </section>
+  <div id="content">
+    <section class="sidebar"> 
+      <!-- This adds a sidebar with 1 searchbox,2 menusets, each with 4 links -->
+      <input type="text"  id="search" value="search">
+      <div id="menubar">
+        <nav class="menu">
+          <h2><!-- Title for menuset 1 -->MENU ITEM 1 </h2>
+          <hr>
+          <ul>
+            <!-- List of links under menuset 1 -->
+            <li><a href="#" title="Link">Link 1</a></li>
+            <li><a href="#" title="Link">Link 2</a></li>
+            <li><a href="#" title="Link">Link 3</a></li>
+            <li class="notimp"><!-- notimp class is applied to remove this link from the tablet and phone views --><a href="#"  title="Link">Link 4</a></li>
+          </ul>
+        </nav>
+        <nav class="menu">
+          <h2>MENU ITEM 2 </h2>
+          <!-- Title for menuset 2 -->
+          <hr>
+          <ul>
+            <!--List of links under menuset 2 -->
+            <li><a href="#" title="Link">Link 1</a></li>
+            <li><a href="#" title="Link">Link 2</a></li>
+            <li><a href="#" title="Link">Link 3</a></li>
+            <li class="notimp"><!-- notimp class is applied to remove this link from the tablet and phone views --><a href="#" title="Link">Link 4</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <section class="mainContent">
+      <div class="productRow"><!-- Each product row contains info of 3 elements -->
+        <article class="productInfo"><!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png">
+            <input type="button" name="button2" id="button" value="提交">
+          </div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder </p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+        <article class="productInfo"><!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+        <article class="productInfo"> <!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+      </div>
+      <div class="productRow"> 
+        <!-- Each product row contains info of 3 elements -->
+        <article class="productInfo"> <!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+        <article class="productInfo"> <!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+        <article class="productInfo"><!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+      </div>
+      <div class="productRow">
+        <article class="productInfo"> <!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+        <article class="productInfo"><!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+        <article class="productInfo"><!-- Each individual product description -->
+          <div><img alt="sample" src="eCommerceAssets/images/200x200.png"></div>
+          <p class="price">$50</p>
+          <p class="productContent">Content holder</p>
+          <input type="button" name="button" value="Buy" class="buyButton">
+        </article>
+      </div>
+    </section>
+  </div>
+  <footer> 
+    <!-- This is the footer with default 3 divs -->
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius sem neque. Integer ornare.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius sem neque. Integer ornare.</p>
+    </div>
+    <div class="footerlinks">
+      <p><a href="#" title="Link">Link 1 </a></p>
+      <p><a href="#" title="Link">Link 2</a></p>
+      <p><a href="#" title="Link">Link 3</a></p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
