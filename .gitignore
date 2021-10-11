@@ -1,0 +1,13 @@
+server_modules
+node_modules
+build
+.DS_Store
+npm-debug.log
+.readme.txt
+.idea
+upload
+upload_temp
+upload_release
+log/*
+.vscode
+package-lock.json
